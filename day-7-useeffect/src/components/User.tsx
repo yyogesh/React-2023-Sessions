@@ -36,6 +36,13 @@ const User = () => {
         setUsers(users);
     }
 
+    const handleCreateUser = async () => {
+        // const response = await fetch(`${API_URL}?_expand=companies`);
+        // const users = await response.json();
+        // console.log('users', users)
+        // setUsers(users);
+    }
+
 
     if (users.length === 0) {
         return <p>There is no user.</p>
@@ -44,7 +51,7 @@ const User = () => {
     return (
         <>
             <h3>New user</h3>
-            <UserForm userData={{}} />
+            <UserForm userData={{}} createUser={handleCreateUser}/>
             <UserList users={users} />
         </>
     )

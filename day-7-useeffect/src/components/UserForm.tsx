@@ -1,19 +1,28 @@
 import React, { useState } from 'react'
+import SelectCompanies from './SelectCompanies'
 
-const UserForm = ({userData}: {userData: any}) => {
+const UserForm = ({userData, createUser}: {userData: any, createUser: (user: any) => void}) => {
     const [user, setUser] = useState({
         name: userData.name ?? "",
         username: userData.username ?? "",
         email: userData.email ?? "",
         phone: userData.phone ?? "",
-        companiesId: userData.companiesId ?? "0",
+        companiesId: userData.companiesId ?? 0,
     })
 
     const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUser({ ...user, [e.target.name]: e.target.value })
 	}
 
-    const submitUser=() => {}
+    const submitUser=(e: any) => {
+		e.preventDefault();
+		if(userData.id) {
+			// update
+		} else {
+			// create
+			createUser(user);
+		}
+	}
 
     return (
         <form onSubmit={submitUser} className='row'>
@@ -39,7 +48,7 @@ const UserForm = ({userData}: {userData: any}) => {
 				pattern='[0-9]{10}'
 				onChange={e => handleValue(e)}
 			/>
-			
+			<SelectCompanies />
 			<input
 				className='btn-submit'
 				type='submit'
