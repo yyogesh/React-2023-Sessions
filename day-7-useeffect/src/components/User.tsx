@@ -20,6 +20,7 @@ export interface ICompany {
 const API_URL = 'http://localhost:3000/users';
 const User = () => {
     const [users, setUsers] = useState<IUser[]>([]);
+    const [selectedUser, setSelectedUser] = useState<IUser>();
 
     useEffect(() => {
         // on component load
@@ -36,13 +37,42 @@ const User = () => {
         setUsers(users);
     }
 
-    const handleCreateUser = async () => {
-        // const response = await fetch(`${API_URL}?_expand=companies`);
-        // const users = await response.json();
-        // console.log('users', users)
-        // setUsers(users);
+    const handleCreateUser = async (user: any) => {
+        user.username = user.name;
+       // user.companiesId = user.companiesId.toString();
+        const response = await fetch(API_URL, {
+            method: "POST",
+            body: JSON.stringify(user),
+            headers: {
+                'Content-Type': 'application/json'  
+            }
+        });
+        if(response.ok) {
+            const users = await response.json();
+            console.log('users', users)
+            fetchUser();
+        }
     }
 
+    const handleUpdateuserById = async (user: any, id: number) => {
+        user.username = user.name;
+        const response = await fetch(`${API_URL}/${id}`, {
+            method: "PUT",
+            body: JSON.stringify(user),
+            headers: {
+                'Content-Type': 'application/json'  
+            }
+        });
+        if(response.ok) {
+            const users = await response.json();
+            console.log('users', users)
+            fetchUser();
+        }
+    }
+
+    const handleUpdateUser = (user: IUser) => {
+        setSelectedUser(user);
+    }
 
     if (users.length === 0) {
         return <p>There is no user.</p>
@@ -51,8 +81,8 @@ const User = () => {
     return (
         <>
             <h3>New user</h3>
-            <UserForm userData={{}} createUser={handleCreateUser}/>
-            <UserList users={users} />
+            <UserForm userData={selectedUser} updateUser={handleUpdateuserById} createUser={handleCreateUser}/>
+            <UserList users={users} handleUpdateUser={handleUpdateUser}/>
         </>
     )
 }

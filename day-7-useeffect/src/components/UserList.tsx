@@ -1,6 +1,6 @@
 import { IUser } from './User'
 
-const UserList = ({ users }: { users: IUser[] }) => {
+const UserList = ({ users, handleUpdateUser }: { users: IUser[], handleUpdateUser: (user: IUser) => void  }) => {
 
     const Row = ({ user }: { user: IUser }) => {
         return <div className='row'>
@@ -9,7 +9,7 @@ const UserList = ({ users }: { users: IUser[] }) => {
             <div>{user.phone}</div>
             <div>{user.companies.name}</div>
             <div className='buttons'>
-                <button>Update</button>
+                <button onClick={() => handleUpdateUser(user)}>Update</button>
                 <button>Delete</button>
             </div>
         </div>
