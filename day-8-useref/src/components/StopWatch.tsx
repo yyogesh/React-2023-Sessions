@@ -1,28 +1,35 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 const StopWatch = () => {
     const [count, setCount] = useState(0);
-    // const timerIdRef = useRef<Timer>();
+     const intervalIdRef = useRef<any>();
 
-    
-    // const startHandler = () => { 
-    //     if (timerIdRef.current) { return; }
+    const startHandler = () => { 
+        if (intervalIdRef.current) { 
+            return; 
+        }
 
-    //     timerIdRef.current = setInterval(() => setCount(prev => {
-    //         return prev + 1;
-    //     }), 1000)
-    // }
-    // const stopHandler = () => { }
+        intervalIdRef.current = setInterval(() => setCount(prev => { // keep calling after 1 sec
+            return prev + 1;
+        }), 1000)
+    }
+    const stopHandler = () => { 
+        clearInterval(intervalIdRef.current);
+        intervalIdRef.current = 0;
+    }
 
 
-
+    useEffect(() => {
+        // on component unmount clear internal
+        return () => clearInterval(intervalIdRef.current);
+    }, [])
 
     return (
         <div>
             <div>Timer: {count}s</div>
             <div>
-                {/* <button onClick={startHandler}>Start</button>
-                <button onClick={stopHandler}>Stop</button> */}
+                <button onClick={startHandler}>Start</button>
+                <button onClick={stopHandler}>Stop</button>
             </div>
         </div>
     )

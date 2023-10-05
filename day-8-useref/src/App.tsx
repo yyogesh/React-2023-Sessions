@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
+import StopWatch from './components/StopWatch';
 
 function App() {
   const [count, setCount] = useState<number>(0);
@@ -32,6 +33,7 @@ function App() {
     countRef.current += 1;
     console.log('countRef value', countRef.current);
     inputRef.current.focus();
+    console.log('inputRef value', inputRef.current);
   }
 
   console.log('reload the component count value', count, countRef.current);
@@ -40,6 +42,8 @@ function App() {
       <input type='text' ref={inputRef}/>
       <button onClick={handleClick}>{'Count ' + count}</button>
       <button onClick={handleRefClick}>{'RefCount ' + countRef.current}</button>
+      <hr/>
+      <StopWatch/>
     </div>
   );
 }
