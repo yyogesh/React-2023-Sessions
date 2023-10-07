@@ -31,6 +31,7 @@ const UserForm = ({userData = {}, createUser, updateUser}:
 		} else {
 			// create
 			createUser(user);
+			// setUser({name: '', username: '', email: '', phone: '', companiesId: 0})
 		}
 	}
 
