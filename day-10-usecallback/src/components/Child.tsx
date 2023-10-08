@@ -1,10 +1,8 @@
-import { useEffect } from "react"
+import React from "react"
 
 const Child = ({onChildClick}: {onChildClick: any }) => {
 
-    useEffect(() => {
-        console.log('child render')
-    }, [])
+    console.log('child render')
 
     return (
     <div>
@@ -13,4 +11,5 @@ const Child = ({onChildClick}: {onChildClick: any }) => {
   )
 }
 
-export default Child
+//To prevent useless list re-renderings, you wrap it into React.memo()
+export default React.memo(Child)
