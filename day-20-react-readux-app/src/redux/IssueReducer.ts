@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface IssueInitialState {
     projectIssues: string[]
 }
@@ -12,7 +11,7 @@ export const issueSlice = createSlice({
     name: 'issue',
     initialState,
     reducers: {
-        addIssue: (state, action:PayloadAction<string>) => {
+        addIssue: (state, action: PayloadAction<string>) => {
             state.projectIssues = [...state.projectIssues, action.payload]
         }
     }
